@@ -1,0 +1,51 @@
+{
+    "name": "opencoreemr/notification-banner-module",
+    "description": "OpenEMR notification banner module for displaying system-wide messages",
+    "type": "library",
+    "keywords": [
+        "openemr",
+        "module",
+        "notification",
+        "banner",
+        "healthcare"
+    ],
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Michael A. Smith",
+            "email": "michael@opencoreemr.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "openemr/oe-module-installer-plugin": "^0.1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenCoreEMR\\Modules\\NotificationBanner\\": "src/"
+        }
+    },
+    "extra": {
+        "oe-module-name": "oce-module-notification-banner"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "echo 'OpenCoreEMR Notification Banner Module installed successfully!'",
+            "echo 'Please go to Administration > Modules > Manage Modules to register and enable the module.'"
+        ],
+        "post-update-cmd": [
+            "echo 'OpenCoreEMR Notification Banner Module updated successfully!'"
+        ]
+    },
+    "support": {
+        "issues": "https://github.com/your-username/oce-notification-banner-module/issues",
+        "source": "https://github.com/your-username/oce-notification-banner-module"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "openemr/oe-module-installer-plugin": true
+        }
+    }
+}
