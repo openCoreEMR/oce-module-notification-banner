@@ -1,5 +1,5 @@
 {
-    "name": "opencoreemr/notification-banner-module",
+    "name": "opencoreemr/oce-module-notification-banner",
     "description": "OpenEMR notification banner module for displaying system-wide messages, by OpenCoreEMR Inc",
     "type": "openemr-module",
     "keywords": [
@@ -41,10 +41,9 @@
         ]
     },
     "support": {
-        "issues": "https://github.com/opencoreemr/openemr-notification-banner/issues",
-        "source": "https://github.com/opencoreemr/openemr-notification-banner",
-        "email": "support@opencoreemr.com",
-        "docs": "https://opencoreemr.com/docs/notification-banner"
+        "issues": "https://github.com/opencoreemr/oce-module-notification-banner/issues",
+        "source": "https://github.com/opencoreemr/oce-module-notification-banner",
+        "email": "support@opencoreemr.com"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
