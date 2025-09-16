@@ -1,7 +1,7 @@
 {
     "name": "opencoreemr/notification-banner-module",
-    "description": "OpenEMR notification banner module for displaying system-wide messages",
-    "type": "library",
+    "description": "OpenEMR notification banner module for displaying system-wide messages, by OpenCoreEMR Inc",
+    "type": "openemr-module",
     "keywords": [
         "openemr",
         "module",
@@ -10,10 +10,13 @@
         "healthcare"
     ],
     "license": "GPL-3.0-or-later",
+    "homepage": "https://opencoreemr.com",
     "authors": [
         {
             "name": "Michael A. Smith",
-            "email": "michael@opencoreemr.com"
+            "email": "michael@opencoreemr.com",
+            "homepage": "https://opencoreemr.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -38,8 +41,10 @@
         ]
     },
     "support": {
-        "issues": "https://github.com/your-username/oce-notification-banner-module/issues",
-        "source": "https://github.com/your-username/oce-notification-banner-module"
+        "issues": "https://github.com/opencoreemr/openemr-notification-banner/issues",
+        "source": "https://github.com/opencoreemr/openemr-notification-banner",
+        "email": "support@opencoreemr.com",
+        "docs": "https://opencoreemr.com/docs/notification-banner"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
