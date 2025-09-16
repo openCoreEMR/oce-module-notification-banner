@@ -9,7 +9,7 @@ This module creates a notification banner to ensure all users of an OpenEMR inst
 If published to Packagist, install via Composer from your OpenEMR root directory:
 
 ```bash
-composer require opencoreemr/notification-banner-module
+composer require opencoreemr/oce-module-notification-banner
 ```
 
 ## Module Activation
