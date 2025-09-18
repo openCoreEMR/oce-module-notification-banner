@@ -151,15 +151,28 @@ class Bootstrap
     }
 
     /**
-     * FIXME: This should probably be done with a twig template in a more MVC style.
+     * Renders the notification banner using twig template
      */
     public function renderNotificationBanner()
     {
         $message = $this->globalsConfig->message;
         if ($message) {
-            echo '<div style="background-color: red; padding: 1em; text-color: white;">';
-            echo "<p>{$message}</p>";
-            echo '</div>';
+            try {
+                echo $this->twig->render('notification-banner.html.twig', [
+                    'message' => $message,
+                    'banner_class' => 'notification-banner',
+                    'message_class' => 'notification-message'
+                ]);
+            } catch (\Exception $e) {
+                $this->logger->errorLogCaller('Failed to render notification banner template', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                // Fallback to basic HTML if template fails
+                echo '<div style="background-color: #dc3545; color: white; padding: 1em; text-align: center;">';
+                echo '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($message) . '</p>';
+                echo '</div>';
+            }
         }
     }
 
