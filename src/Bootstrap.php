@@ -18,38 +18,15 @@ namespace OpenCoreEMR\Modules\NotificationBanner;
 use OpenEMR\Common\Logging\SystemLogger;
 use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Core\Kernel;
-use OpenEMR\Events\Appointments\AppointmentSetEvent;
-use OpenEMR\Events\Core\TwigEnvironmentEvent;
 use OpenEMR\Events\Globals\GlobalsInitializedEvent;
 use OpenEMR\Events\Main\Tabs\RenderEvent;
-use OpenEMR\Events\PatientDemographics\RenderEvent as pRenderEvent;
-use OpenEMR\Events\RestApiExtend\RestApiCreateEvent;
-use OpenEMR\Events\RestApiExtend\RestApiResourceServiceEvent;
-use OpenEMR\Events\RestApiExtend\RestApiScopeEvent;
-use OpenEMR\Menu\MenuEvent;
 use OpenEMR\Services\Globals\GlobalSetting;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Twig\Error\LoaderError;
-use Twig\Loader\FilesystemLoader;
 
 class Bootstrap
 {
     const MODULE_NAME = "oce-module-notification-banner";
-    const GLOBAL_SETTINGS = [
-        'message' => [
-            'title' => 'Banner Message',
-            'type' => GlobalSetting::DATA_TYPE_TEXT,
-            'default' => '',
-            'description' => 'The message to display in the maintenance banner'
-        ],
-        'is_active' => [
-            'title' => 'Banner Toggle',
-            'type' => GlobalSetting::DATA_TYPE_BOOL,
-            'default' => '',
-            'description' => 'The message will be displayed if this is true and the message is not blank.'
-        ]
-    ];
 
     /**
      * @var EventDispatcherInterface The object responsible for sending and subscribing to events through the OpenEMR system
@@ -61,10 +38,6 @@ class Bootstrap
      */
     private GlobalConfig $globalsConfig;
 
-    /**
-     * @var string The folder name of the module.  Set dynamically from searching the filesystem.
-     */
-    private string $moduleDirectoryName;
 
     /**
      * @var \Twig\Environment The twig rendering environment
@@ -78,18 +51,16 @@ class Bootstrap
 
     public function __construct(EventDispatcherInterface $eventDispatcher, ?Kernel $kernel = null)
     {
-        global $GLOBALS;
-
         if (empty($kernel)) {
             $kernel = new Kernel();
         }
         $this->eventDispatcher = $eventDispatcher;
-        $this->globalsConfig = new GlobalConfig($GLOBALS);
-        $this->moduleDirectoryName = basename(dirname(__DIR__));
-	
+        $this->globalsConfig = new GlobalConfig();
+
         // NOTE: eventually you will be able to pull the twig container directly from the kernel instead of instantiating
         // it here.
-        $twig = new TwigContainer($this->getTemplatePath(), $kernel);
+        $templatePath = \dirname(__DIR__) . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR;
+        $twig = new TwigContainer($templatePath, $kernel);
         $twigEnv = $twig->getTwig();
         $this->twig = $twigEnv;
 
@@ -151,53 +122,28 @@ class Bootstrap
     }
 
     /**
-     * FIXME: This should probably be done with a twig template in a more MVC style.
+     * Renders the notification banner using twig template
      */
     public function renderNotificationBanner()
     {
         $message = $this->globalsConfig->message;
         if ($message) {
-            echo '<div style="background-color: red; padding: 1em; text-color: white;">';
-            echo "<p>{$message}</p>";
-            echo '</div>';
+            try {
+                echo $this->twig->render('notification-banner.html.twig', [
+                    'message' => $message
+                ]);
+            } catch (\Exception $e) {
+                $this->logger->errorLogCaller('Failed to render notification banner template', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                // Fallback to basic HTML if template fails
+                echo '<div style="background-color: #dc3545; color: white; padding: 1em; text-align: center;">';
+                echo '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($message) . '</p>';
+                echo '</div>';
+            }
         }
     }
 
-    /**
-     * We tie into any events dealing with the templates / page rendering of the system here
-     */
-    public function registerTemplateEvents()
-    {
-        $this->logger->debug('Notification Banner registering template events.');
-        $this->eventDispatcher->addListener(TwigEnvironmentEvent::EVENT_CREATED, [$this, 'addTemplateOverrideLoader']);
-        $this->logger->debug('Notification Banner template events registered.');
-    }
 
-    /**
-     * @param TwigEnvironmentEvent $event
-     */
-    public function addTemplateOverrideLoader(TwigEnvironmentEvent $event)
-    {
-        $this->logger->debug('Notification Banner adding template override loader');
-        try {
-            $twig = $event->getTwigEnvironment();
-            if ($twig === $this->twig) {
-                $this->logger->debug('Notification Banner Twig environment is already set up.');
-                return;
-            }
-            // we make sure we can override our file system directory here.
-            $loader = $twig->getLoader();
-            if ($loader instanceof FilesystemLoader) {
-                $loader->prependPath($this->getTemplatePath());
-            }
-            $this->logger->debug('Added Notification Banner template override loader');
-        } catch (LoaderError $error) {
-            $this->logger->errorLogCaller("Failed to create template loader", ['innerMessage' => $error->getMessage(), 'trace' => $error->getTraceAsString()]);
-        }
-    }
-
-    public function getTemplatePath()
-    {
-        return \dirname(__DIR__) . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR;
-    }
 }

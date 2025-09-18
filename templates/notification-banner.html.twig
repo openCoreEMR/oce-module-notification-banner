@@ -1,0 +1,17 @@
+{#
+ # Notification Banner Template
+ # This template renders a notification banner at the top of OpenEMR pages
+ #
+ # Variables:
+ # - message: The notification message to display
+ # - banner_class: CSS class for the banner (default: 'notification-banner')
+ # - message_class: CSS class for the message (default: 'notification-message')
+ #}
+
+{% if message %}
+<div class="{{ banner_class|default('notification-banner') }}" style="background-color: #dc3545; color: white; padding: 1em; text-align: center; border-bottom: 1px solid #c82333;">
+    <p class="{{ message_class|default('notification-message') }}" style="margin: 0; font-weight: bold;">
+        {{ message|escape }}
+    </p>
+</div>
+{% endif %}

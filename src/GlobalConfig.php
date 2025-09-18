@@ -18,7 +18,6 @@ class GlobalConfig
 {
     public const CONFIG_OPTION_ACTIVE = 'oce_notification_banner_active';
     public const CONFIG_OPTION_MESSAGE = 'oce_notification_banner_message';
-    private $globalsArray;
 
     public string $message {
         get {
