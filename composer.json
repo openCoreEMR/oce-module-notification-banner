@@ -1,6 +1,7 @@
 {
     "name": "opencoreemr/oce-module-notification-banner",
     "description": "OpenEMR notification banner module for displaying system-wide messages, by OpenCoreEMR Inc",
+    "license": "GPL-3.0-or-later",
     "type": "openemr-module",
     "keywords": [
         "openemr",
@@ -9,8 +10,6 @@
         "banner",
         "healthcare"
     ],
-    "license": "GPL-3.0-or-later",
-    "homepage": "https://opencoreemr.com",
     "authors": [
         {
             "name": "Michael A. Smith",
@@ -19,13 +18,36 @@
             "role": "Developer"
         }
     ],
-    "require": {
-        "php": ">=8.1",
-        "openemr/oe-module-installer-plugin": "^0.1.5"
+    "homepage": "https://opencoreemr.com",
+    "support": {
+        "email": "support@opencoreemr.com",
+        "issues": "https://github.com/opencoreemr/oce-module-notification-banner/issues",
+        "source": "https://github.com/opencoreemr/oce-module-notification-banner"
     },
+    "require": {
+        "php": ">=8.2",
+        "openemr/oe-module-installer-plugin": "^0.1.5",
+        "symfony/event-dispatcher": "^6.0 || ^7.0",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.44",
+        "maglnet/composer-require-checker": "^4.0",
+        "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.0",
+        "squizlabs/php_codesniffer": "^3.8"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "OpenCoreEMR\\Modules\\NotificationBanner\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "openemr/oe-module-installer-plugin": true
         }
     },
     "extra": {
@@ -38,18 +60,17 @@
         ],
         "post-update-cmd": [
             "echo 'OpenCoreEMR Notification Banner Module updated successfully!'"
-        ]
-    },
-    "support": {
-        "issues": "https://github.com/opencoreemr/oce-module-notification-banner/issues",
-        "source": "https://github.com/opencoreemr/oce-module-notification-banner",
-        "email": "support@opencoreemr.com"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "config": {
-        "allow-plugins": {
-            "openemr/oe-module-installer-plugin": true
-        }
+        ],
+        "code-quality": [
+            "@phpcs",
+            "@phpstan",
+            "@rector"
+        ],
+        "phpcbf": "phpcbf",
+        "phpcs": "phpcs",
+        "phpstan": "phpstan analyse",
+        "rector": "rector process --dry-run",
+        "rector-fix": "rector process",
+        "require-checker": "composer-require-checker check --config-file=.composer-require-checker.json"
     }
 }

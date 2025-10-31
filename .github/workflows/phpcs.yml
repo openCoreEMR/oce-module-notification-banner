@@ -1,0 +1,52 @@
+name: PHP Code Sniffer
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+permissions:
+  contents: read
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-24.04
+    name: PHP Code Style
+    strategy:
+      matrix:
+        php-version: ['8.2']
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        coverage: none
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        {
+          printf 'dir='
+          composer config cache-files-dir
+        } >> "$GITHUB_OUTPUT"
+
+    - name: Cache Composer
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-${{ matrix.php-version }}-
+          ${{ runner.os }}-composer-
+
+    - name: Composer Install
+      run: composer install --prefer-dist --no-progress
+
+    - name: Check PHP Code Style
+      run: composer phpcs

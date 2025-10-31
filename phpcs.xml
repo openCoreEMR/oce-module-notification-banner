@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ruleset name="OpenCoreEMR Notification Banner">
+    <description>PHP CodeSniffer configuration for OpenCoreEMR Notification Banner Module</description>
+
+    <!-- Files to check -->
+    <file>src</file>
+    <file>openemr.bootstrap.php</file>
+    <file>version.php</file>
+
+    <!-- Show progress -->
+    <arg value="p"/>
+    <!-- Show colors in output -->
+    <arg name="colors"/>
+    <!-- Use PSR-12 as base standard -->
+    <rule ref="PSR12"/>
+
+    <!-- PHP version compatibility -->
+    <config name="testVersion" value="8.2-"/>
+
+    <!-- Additional rules -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Generic.PHP.ForbiddenFunctions"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+</ruleset>

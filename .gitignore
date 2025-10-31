@@ -1,1 +1,9 @@
 *.swp
+
+# Composer
+vendor/
+
+# Code quality tools cache
+.phpcs-cache
+.phpstan-cache
+.phpunit.cache

@@ -17,33 +17,33 @@ use OpenEMR\Services\Globals\GlobalSetting;
 class GlobalConfig
 {
     public const CONFIG_OPTION_ACTIVE = 'oce_notification_banner_active';
+
     public const CONFIG_OPTION_MESSAGE = 'oce_notification_banner_message';
 
-    public string $message {
-        get {
-            return $GLOBALS[self::CONFIG_OPTION_MESSAGE] ?? '';
-        }
+    public function getMessage(): string
+    {
+        return $GLOBALS[self::CONFIG_OPTION_MESSAGE] ?? '';
     }
 
-    public bool $isActive {
-        get {
-            return (bool)($GLOBALS[self::CONFIG_OPTION_ACTIVE] ?? false);
-        }
+    public function getIsActive(): bool
+    {
+        return (bool)($GLOBALS[self::CONFIG_OPTION_ACTIVE] ?? false);
     }
 
     /**
      * Returns true if all of the settings have been configured.  Otherwise it returns false.
-     *
-     * @return bool
      */
-    public function isConfigured()
+    public function isConfigured(): bool
     {
         return true;
     }
 
-    public function getGlobalSettingSectionConfiguration()
+    /**
+     * @return array<string, array<string, string|bool>>
+     */
+    public function getGlobalSettingSectionConfiguration(): array
     {
-        $settings = [
+        return [
             self::CONFIG_OPTION_ACTIVE => [
                 'title' => 'Activate Notification Banner',
                 'description' => 'Toggle the banner display',
@@ -57,6 +57,5 @@ class GlobalConfig
                 'default' => ''
             ]
         ];
-        return $settings;
     }
 }

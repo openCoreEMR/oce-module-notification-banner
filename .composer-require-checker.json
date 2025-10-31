@@ -1,0 +1,23 @@
+{
+  "symbol-whitelist": [
+    "OpenEMR\\Common\\Logging\\SystemLogger",
+    "OpenEMR\\Common\\Twig\\TwigContainer",
+    "OpenEMR\\Core\\Kernel",
+    "OpenEMR\\Events\\Globals\\GlobalsInitializedEvent",
+    "OpenEMR\\Events\\Main\\Tabs\\RenderEvent",
+    "OpenEMR\\Services\\Globals\\GlobalSetting",
+    "Symfony\\Component\\EventDispatcher\\EventDispatcherInterface",
+    "Twig\\Environment",
+    "xlt"
+  ],
+  "php-core-extensions": [
+    "Core",
+    "Reflection",
+    "SPL",
+    "date",
+    "hash",
+    "pcre",
+    "random",
+    "standard"
+  ]
+}
