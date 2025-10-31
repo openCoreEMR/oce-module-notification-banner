@@ -1,0 +1,78 @@
+parameters:
+  ignoreErrors:
+    - message: '#^Call to method registerNamespaceIfNotExists\(\) on an unknown class OpenEMR\\Core\\ModulesClassLoader\.$#'
+      identifier: class.notFound
+      count: 1
+      path: openemr.bootstrap.php
+    - message: '#^PHPDoc tag @var for variable \$classLoader contains unknown class OpenEMR\\Core\\ModulesClassLoader\.$#'
+      identifier: class.notFound
+      count: 1
+      path: openemr.bootstrap.php
+    - message: '#^Access to constant EVENT_BODY_RENDER_PRE on an unknown class OpenEMR\\Events\\Main\\Tabs\\RenderEvent\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Access to constant EVENT_HANDLE on an unknown class OpenEMR\\Events\\Globals\\GlobalsInitializedEvent\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Call to method debug\(\) on an unknown class OpenEMR\\Common\\Logging\\SystemLogger\.$#'
+      identifier: class.notFound
+      count: 5
+      path: src/Bootstrap.php
+    - message: '#^Call to method errorLogCaller\(\) on an unknown class OpenEMR\\Common\\Logging\\SystemLogger\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Call to method getGlobalsService\(\) on an unknown class OpenEMR\\Events\\Globals\\GlobalsInitializedEvent\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Call to method getTwig\(\) on an unknown class OpenEMR\\Common\\Twig\\TwigContainer\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Class OpenEMR\\Core\\Kernel not found\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Function xlt not found\.$#'
+      identifier: function.notFound
+      count: 3
+      path: src/Bootstrap.php
+    - message: '#^Instantiated class OpenEMR\\Common\\Logging\\SystemLogger not found\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Instantiated class OpenEMR\\Common\\Twig\\TwigContainer not found\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Instantiated class OpenEMR\\Core\\Kernel not found\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Instantiated class OpenEMR\\Services\\Globals\\GlobalSetting not found\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Parameter \$event of method OpenCoreEMR\\Modules\\NotificationBanner\\Bootstrap\:\:addGlobalSettingsSection\(\) has invalid type OpenEMR\\Events\\Globals\\GlobalsInitializedEvent\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Parameter \$kernel of method OpenCoreEMR\\Modules\\NotificationBanner\\Bootstrap\:\:__construct\(\) has invalid type OpenEMR\\Core\\Kernel\.$#'
+      identifier: class.notFound
+      count: 2
+      path: src/Bootstrap.php
+    - message: '#^Property OpenCoreEMR\\Modules\\NotificationBanner\\Bootstrap\:\:\$logger has unknown class OpenEMR\\Common\\Logging\\SystemLogger as its type\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/Bootstrap.php
+    - message: '#^Access to constant DATA_TYPE_BOOL on an unknown class OpenEMR\\Services\\Globals\\GlobalSetting\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/GlobalConfig.php
+    - message: '#^Access to constant DATA_TYPE_TEXT on an unknown class OpenEMR\\Services\\Globals\\GlobalSetting\.$#'
+      identifier: class.notFound
+      count: 1
+      path: src/GlobalConfig.php

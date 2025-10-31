@@ -26,39 +26,37 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Bootstrap
 {
-    const MODULE_NAME = "oce-module-notification-banner";
+    public const MODULE_NAME = "oce-module-notification-banner";
 
     /**
-     * @var EventDispatcherInterface The object responsible for sending and subscribing to events through the OpenEMR system
+     * @var GlobalConfig Holds our module global configuration values that can be used
+     *      throughout the module.
      */
-    private EventDispatcherInterface $eventDispatcher;
-
-    /**
-     * @var GlobalConfig Holds our module global configuration values that can be used throughout the module.
-     */
-    private GlobalConfig $globalsConfig;
+    private readonly GlobalConfig $globalsConfig;
 
 
     /**
      * @var \Twig\Environment The twig rendering environment
      */
-    private \Twig\Environment $twig;
+    private readonly \Twig\Environment $twig;
+
+    private readonly SystemLogger $logger;
 
     /**
-     * @var SystemLogger
+     * @param EventDispatcherInterface $eventDispatcher The object responsible for sending and subscribing
+     *      to events through the OpenEMR system
+     * @param ?Kernel $kernel The OpenEMR kernel instance
      */
-    private SystemLogger $logger;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, ?Kernel $kernel = null)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, ?Kernel $kernel = null)
     {
-        if (empty($kernel)) {
+        if (!$kernel instanceof \OpenEMR\Core\Kernel) {
             $kernel = new Kernel();
         }
-        $this->eventDispatcher = $eventDispatcher;
+
         $this->globalsConfig = new GlobalConfig();
 
-        // NOTE: eventually you will be able to pull the twig container directly from the kernel instead of instantiating
-        // it here.
+        // NOTE: eventually you will be able to pull the twig container directly from the
+        // kernel instead of instantiating it here.
         $templatePath = \dirname(__DIR__) . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR;
         $twig = new TwigContainer($templatePath, $kernel);
         $twigEnv = $twig->getTwig();
@@ -68,12 +66,15 @@ class Bootstrap
         $this->logger->debug('Notification Banner Bootstrap constructed');
     }
 
-    public function addGlobalSettings()
+    public function addGlobalSettings(): void
     {
-        $this->eventDispatcher->addListener(GlobalsInitializedEvent::EVENT_HANDLE, [$this, 'addGlobalSettingsSection']);
+        $this->eventDispatcher->addListener(
+            GlobalsInitializedEvent::EVENT_HANDLE,
+            $this->addGlobalSettingsSection(...)
+        );
     }
 
-    public function addGlobalSettingsSection(GlobalsInitializedEvent $event)
+    public function addGlobalSettingsSection(GlobalsInitializedEvent $event): void
     {
         global $GLOBALS;
 
@@ -107,27 +108,29 @@ class Bootstrap
             $this->logger->debug('Notification Banner is not configured. Skipping subscribeToEvents.');
             return;
         }
-        if (!$this->globalsConfig->isActive) {
+
+        if (!$this->globalsConfig->getIsActive()) {
             $this->logger->debug('Notifications Banner is inactive. Skipping subscribeToEvents.');
             return;
         }
+
         $this->logger->debug('Notification Banner subscribeToEvents called');
         $this->registerRenderEvent();
         $this->logger->debug('Notification Banner subscribed');
     }
 
-    protected function registerRenderEvent()
+    protected function registerRenderEvent(): void
     {
-        $this->eventDispatcher->addListener(RenderEvent::EVENT_BODY_RENDER_PRE, [$this, 'renderNotificationBanner']);
+        $this->eventDispatcher->addListener(RenderEvent::EVENT_BODY_RENDER_PRE, $this->renderNotificationBanner(...));
     }
 
     /**
      * Renders the notification banner using twig template
      */
-    public function renderNotificationBanner()
+    public function renderNotificationBanner(): void
     {
-        $message = $this->globalsConfig->message;
-        if ($message) {
+        $message = $this->globalsConfig->getMessage();
+        if ($message !== '' && $message !== '0') {
             try {
                 echo $this->twig->render('notification-banner.html.twig', [
                     'message' => $message
@@ -144,6 +147,4 @@ class Bootstrap
             }
         }
     }
-
-
 }
