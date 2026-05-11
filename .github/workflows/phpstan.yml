@@ -3,79 +3,14 @@ name: PHPStan
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
-
-permissions:
-  contents: read
+      - main
 
 jobs:
   phpstan:
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        php-version: ['8.2']
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v5
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-
-    - name: Get composer cache directory
-      id: composer-cache
-      run: |
-        {
-          printf 'dir='
-          composer config cache-files-dir
-        } >> $GITHUB_OUTPUT
-
-    - name: Composer Cache
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-${{ matrix.php-version }}-
-          ${{ runner.os }}-composer-
-
-    - name: Composer Install
-      run: composer install --prefer-dist --no-progress
-
-    - name: PHPStan Cache
-      uses: actions/cache@v4
-      with:
-        path: .phpstan-cache
-        key: "phpstan-result-cache-${{ github.run_id }}"
-        restore-keys: |
-          phpstan-result-cache-
-
-    - name: PHPStan Diagnose
-      run: vendor/bin/phpstan diagnose
-
-    - name: PHPStan Analyze
-      id: phpstan-analyze
-      run: vendor/bin/phpstan analyze --error-format=github
-      continue-on-error: true
-
-    - name: PHPStan Baseline
-      if: steps.phpstan-analyze.outcome == 'failure'
-      run: vendor/bin/phpstan --generate-baseline=phpstan-baseline-new.neon
-      continue-on-error: true
-
-    - name: Upload PHPStan Baseline
-      if: hashFiles('phpstan-baseline-new.neon') != ''
-      uses: actions/upload-artifact@v5
-      with:
-        name: phpstan-baseline-php${{ matrix.php-version }}
-        path: phpstan-baseline-new.neon
-      continue-on-error: true
-
-    - name: Check PHPStan Results
-      if: steps.phpstan-analyze.outcome == 'failure'
-      run: false
+    uses: openCoreEMR/github-workflows-public/.github/workflows/php-composer-script.yml@0.0.2
+    with:
+      name: Run PHPStan
+      run: composer phpstan

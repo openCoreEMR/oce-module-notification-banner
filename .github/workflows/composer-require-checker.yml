@@ -3,60 +3,27 @@ name: Composer Require Checker
 on:
   push:
     branches:
-    - main
+      - main
     paths:
-    - 'composer.json'
-    - 'composer.lock'
-    - '**.php'
-    - '.github/workflows/composer-require-checker.yml'
+      - composer.json
+      - composer.lock
+      - '**.php'
+      - .composer-require-checker.json
+      - .github/workflows/composer-require-checker.yml
   pull_request:
     branches:
-    - main
+      - main
     paths:
-    - 'composer.json'
-    - 'composer.lock'
-    - '**.php'
-    - '.github/workflows/composer-require-checker.yml'
-  workflow_dispatch:
-
-permissions:
-  contents: read
+      - composer.json
+      - composer.lock
+      - '**.php'
+      - .composer-require-checker.json
+      - .github/workflows/composer-require-checker.yml
 
 jobs:
   composer-require-checker:
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        php-version: ['8.2']
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v5
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-
-    - name: Get composer cache directory
-      id: composer-cache
-      run: |
-        {
-          printf 'dir='
-          composer config cache-files-dir
-        } >> $GITHUB_OUTPUT
-
-    - name: Composer Cache
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-${{ matrix.php-version }}-
-          ${{ runner.os }}-composer-
-
-    - name: Composer Install
-      run: composer install --prefer-dist --no-progress
-
-    - name: Run Composer Require Checker
-      run: composer require-checker
+    uses: openCoreEMR/github-workflows-public/.github/workflows/php-composer-script.yml@0.0.2
+    with:
+      name: Run Composer Require Checker
+      run: composer-require-checker check --config-file=.composer-require-checker.json
+      php-tools: 'composer:v2, composer-require-checker'

@@ -1,52 +1,16 @@
-name: PHP Code Sniffer
+name: PHP CodeSniffer
 
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
-
-permissions:
-  contents: read
+      - main
 
 jobs:
   phpcs:
-    runs-on: ubuntu-24.04
-    name: PHP Code Style
-    strategy:
-      matrix:
-        php-version: ['8.2']
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v5
-
-    - name: Install PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: |
-        {
-          printf 'dir='
-          composer config cache-files-dir
-        } >> "$GITHUB_OUTPUT"
-
-    - name: Cache Composer
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-${{ matrix.php-version }}-
-          ${{ runner.os }}-composer-
-
-    - name: Composer Install
-      run: composer install --prefer-dist --no-progress
-
-    - name: Check PHP Code Style
+    uses: openCoreEMR/github-workflows-public/.github/workflows/php-composer-script.yml@0.0.2
+    with:
+      name: Run PHP CodeSniffer
       run: composer phpcs
