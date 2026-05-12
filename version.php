@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Package version data for the OpenCoreEmr Notification Banner Module
  *
