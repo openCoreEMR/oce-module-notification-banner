@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Package version data for the OpenCoreEmr Notification Banner Module
  *
@@ -11,6 +9,8 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2025 OpenCoreEMR Inc
  * @license   GNU General Public License 3
  */
+
+declare(strict_types=1);
 
 $v_major = '1';
 $v_minor = '0';
