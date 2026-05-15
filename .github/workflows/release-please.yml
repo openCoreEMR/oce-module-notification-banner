@@ -9,9 +9,28 @@ on:
 permissions: {}
 
 jobs:
+  # Mint a token from the oce-release-please GitHub App so the release PR is
+  # created under the app's identity. PRs from GitHub Apps (unlike the default
+  # GITHUB_TOKEN) trigger pull_request workflows, so PR-time CI runs against
+  # the release PR before merge.
+  mint-token:
+    name: Mint app token
+    runs-on: ubuntu-latest
+    outputs:
+      token: ${{ steps.app-token.outputs.token }}
+    steps:
+      - id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ vars.RELEASE_PLEASE_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_PLEASE_PRIVATE_KEY }}
+
   release-please:
+    needs: mint-token
     if: ${{ !github.event.repository.is_template }}
     uses: opencoreemr/github-workflows-public/.github/workflows/release-please-reusable.yml@0.0.5
     permissions:
       contents: write
       pull-requests: write
+    secrets:
+      token: ${{ needs.mint-token.outputs.token }}
