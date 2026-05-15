@@ -46,9 +46,7 @@ declare(strict_types=1);
         $proc = proc_open(
             $cmd,
             [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
-            $pipes,
-            null,
-            null
+            $pipes
         );
         if (!is_resource($proc)) {
             return '';
