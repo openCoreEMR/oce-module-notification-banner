@@ -103,5 +103,5 @@ declare(strict_types=1);
     // them on every release via the x-release-please-* annotations.
     default_major: '0', // x-release-please-major
     default_minor: '6', // x-release-please-minor
-    default_patch: '1' // x-release-please-patch
+    default_patch: '2' // x-release-please-patch
 );
