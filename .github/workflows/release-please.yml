@@ -11,10 +11,8 @@ permissions: {}
 jobs:
   release-please:
     if: ${{ !github.event.repository.is_template }}
-    uses: opencoreemr/github-workflows-public/.github/workflows/release-please-reusable.yml@0.0.6
+    uses: opencoreemr/github-workflows-public/.github/workflows/release-please-reusable.yml@1.0.0
     permissions:
       contents: write
       pull-requests: write
-    secrets:
-      app-client-id: ${{ vars.RELEASE_PLEASE_CLIENT_ID }}
-      app-private-key: ${{ secrets.RELEASE_PLEASE_PRIVATE_KEY }}
+    secrets: inherit
