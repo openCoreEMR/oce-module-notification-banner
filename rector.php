@@ -12,9 +12,9 @@ return RectorConfig::configure()
         __DIR__ . '/openemr.bootstrap.php',
         __DIR__ . '/version.php',
     ])
-    ->withPhpSets(php82: true)
+    ->withPhpSets(php85: true)
     ->withSets([
-        LevelSetList::UP_TO_PHP_82,
+        LevelSetList::UP_TO_PHP_85,
         SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         SetList::EARLY_RETURN,
