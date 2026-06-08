@@ -10,8 +10,11 @@ on:
 
 jobs:
   rector:
+    strategy:
+      matrix:
+        php-version: ['8.5']
     uses: openCoreEMR/github-workflows-public/.github/workflows/php-composer-script.yml@1.0.0
     with:
       name: Run Rector (dry-run)
-      php-version: '8.5'
+      php-version: ${{ matrix.php-version }}
       run: composer rector
