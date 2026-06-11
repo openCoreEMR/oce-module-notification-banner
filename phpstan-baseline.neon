@@ -32,10 +32,6 @@ parameters:
       identifier: class.notFound
       count: 1
       path: src/Bootstrap.php
-    - message: '#^Class OpenEMR\\Core\\Kernel not found\.$#'
-      identifier: class.notFound
-      count: 1
-      path: src/Bootstrap.php
     - message: '#^Function xlt not found\.$#'
       identifier: function.notFound
       count: 3
@@ -45,10 +41,6 @@ parameters:
       count: 1
       path: src/Bootstrap.php
     - message: '#^Instantiated class OpenEMR\\Common\\Twig\\TwigContainer not found\.$#'
-      identifier: class.notFound
-      count: 1
-      path: src/Bootstrap.php
-    - message: '#^Instantiated class OpenEMR\\Core\\Kernel not found\.$#'
       identifier: class.notFound
       count: 1
       path: src/Bootstrap.php
