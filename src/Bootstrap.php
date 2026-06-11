@@ -49,10 +49,6 @@ class Bootstrap
      */
     public function __construct(private readonly EventDispatcherInterface $eventDispatcher, ?Kernel $kernel = null)
     {
-        if (!$kernel instanceof \OpenEMR\Core\Kernel) {
-            $kernel = new Kernel();
-        }
-
         $this->globalsConfig = new GlobalConfig();
 
         // NOTE: eventually you will be able to pull the twig container directly from the
