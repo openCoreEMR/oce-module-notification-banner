@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.3](https://github.com/openCoreEMR/oce-module-notification-banner/compare/0.6.2...0.6.3) (2026-06-11)
+
+
+### Bug Fixes
+
+* **bootstrap:** resolve Kernel projectDir throw on oce-810 ([#39](https://github.com/openCoreEMR/oce-module-notification-banner/issues/39)) ([8146da4](https://github.com/openCoreEMR/oce-module-notification-banner/commit/8146da49bc3e40c6c96514b2d6edb0d0d79f4a68))
+* **deps:** bump twig/twig from 3.25.0 to 3.26.0 ([#26](https://github.com/openCoreEMR/oce-module-notification-banner/issues/26)) ([651656d](https://github.com/openCoreEMR/oce-module-notification-banner/commit/651656de0f178e02b38ddfcae112f512030d2f61))
+* **deps:** bump twig/twig from 3.26.0 to 3.27.0 ([#32](https://github.com/openCoreEMR/oce-module-notification-banner/issues/32)) ([ca00e3e](https://github.com/openCoreEMR/oce-module-notification-banner/commit/ca00e3e38a4fd0d877c4b2599c7663f26f97d4e8))
+* **deps:** bump twig/twig from 3.27.0 to 3.27.1 ([#34](https://github.com/openCoreEMR/oce-module-notification-banner/issues/34)) ([046e314](https://github.com/openCoreEMR/oce-module-notification-banner/commit/046e31470b79c2743a6cf83341e5b58461c0b537))
+
 ## [0.6.2](https://github.com/openCoreEMR/oce-module-notification-banner/compare/0.6.1...0.6.2) (2026-05-19)
 
 
