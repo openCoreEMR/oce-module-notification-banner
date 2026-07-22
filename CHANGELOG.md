@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.4](https://github.com/openCoreEMR/oce-module-notification-banner/compare/0.6.3...0.6.4) (2026-07-22)
+
+
+### Bug Fixes
+
+* **deps:** bump symfony/event-dispatcher from 7.4.9 to 7.4.14 ([#43](https://github.com/openCoreEMR/oce-module-notification-banner/issues/43)) ([3ac61bb](https://github.com/openCoreEMR/oce-module-notification-banner/commit/3ac61bb72ff5e120bf04366384b5a57ed148342b))
+* **deps:** bump twig/twig from 3.27.1 to 3.28.0 ([#46](https://github.com/openCoreEMR/oce-module-notification-banner/issues/46)) ([f4a629a](https://github.com/openCoreEMR/oce-module-notification-banner/commit/f4a629a2b35a162f0c424ed701e152c9b0654b79))
+
 ## [0.6.3](https://github.com/openCoreEMR/oce-module-notification-banner/compare/0.6.2...0.6.3) (2026-06-11)
 
 
